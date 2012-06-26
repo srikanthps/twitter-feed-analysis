@@ -1,0 +1,7 @@
+{
+  "dbhost": "127.0.0.1",
+  "dbport": "28017",
+  "dbname": "trends4u",
+  "dbcollections" : ["twitter","products","metrics"],
+  "mr_collection": "metrics"
+}

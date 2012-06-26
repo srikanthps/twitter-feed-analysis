@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	
+    <title>
+      <%= title%>
+    </title>
+        <% if (data.header && data.values[0]) { %>
+			<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+			<script type="text/javascript">
+			  google.load('visualization', '1', {packages: ['corechart']});
+			</script>
+			<script type="text/javascript">
+			  function drawVisualization() {
+				// Create and populate the data table.
+				// <%= data.header%>, <%= data.values[0] %>
+				var data_raw = eval("[[<% for (var i = 0; i < data.header.length; i++) { %>	'<%= data.header[i] %>'	,	<% } %>], <% for (var j = data.values.length - 1; j >= 0; j--) { %>	[<% for (var i = 0; i < data.values[j].length; i++) { %> <%= i == 0 ? "'" : ""%><%= data.values[j][i] %><%= i == 0 ? "'" : ""%>,	<% } %>], <% } %> ]");
+				
+				var data = google.visualization.arrayToDataTable(data_raw);
+				
+				// Create and draw the visualization.
+				new google.visualization.LineChart(document.getElementById('visualization')).
+						draw(data, {curveType: "none",
+									width: 900, height: 500,
+									xAxis: {minValue: 0},
+									vAxis: {maxValue: 10}}
+							);
+				}
+		  
+				google.setOnLoadCallback(drawVisualization);
+			</script>
+        <% } %>
+		
+		
+  </head>
+  <body style="font-family: Arial;border: 0 none; margin-left:50px; margin-right:50px">
+	<h1>Trends4u</h1>
+	<form action="/" method="post">
+		<strong>Enter a phrase <input name="product" type="text" style="width:150px"/> to <input name="submit" value="Track it!" type="submit" /></strong>
+	</form>
+		
+		<% if (!data.products_present) { %>
+			<div>
+				<p style="font-size: 10pt"> Nothing to track. Add a phrase to start tracking.</p>
+			</div>	
+		<% } else if (!data.values_present) { %>
+			<div>
+				<p style="font-size: 10pt"> No metrics to display. (Ensure that metric generation job is running!).</p>
+			</div>	
+		<% } else { %>
+			<div align="center">
+				<div id="visualization"></div>
+			<div>
+			<h3><strong>Twitter Trends - Based on number of tweets</strong></h3>
+		<% } %>
+  </body>
+</html>
