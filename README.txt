@@ -15,7 +15,8 @@ Installation and running:
 install node.js (http://nodejs.org/)
 install Mongo DB
 
-cd trends4u
+Install the dependencies using npm
+---------------------------------
 npm install -d 
 
 Run the three apps:
