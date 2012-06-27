@@ -21,6 +21,6 @@ npm install -d
 
 Run the three apps:
 ------------------
-node app.js
 node feedreader.js
-node mr.js
+node analyzer-mr.js
+node app.js
